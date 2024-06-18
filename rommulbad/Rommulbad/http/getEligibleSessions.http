@@ -1,0 +1,7 @@
+### Get eligible sessions for a specific candidate and diploma
+GET http://localhost:5000/candidate/Eleanor/session/A
+Accept: application/json
+
+### Get eligible sessions for a specific candidate with another diploma
+GET http://localhost:5000/candidate/Eleanor/session/B
+Accept: application/json

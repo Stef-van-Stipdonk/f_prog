@@ -1,0 +1,3 @@
+### Get all candidates
+GET http://localhost:5000/candidate
+Accept: application/json

@@ -1,0 +1,3 @@
+### Get the total minutes of swimming sessions for a specific candidate
+GET http://localhost:5000/candidate/Eleanor/session/total
+Accept: application/json

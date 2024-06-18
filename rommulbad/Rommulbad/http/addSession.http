@@ -1,0 +1,21 @@
+### Add a new session for a specific candidate
+POST http://localhost:5000/candidate/Eleanor/session
+Content-Type: application/json
+Accept: application/json
+
+{
+  "deep": true,
+  "date": "2024-06-15T00:00:00Z",
+  "minutes": 20
+}
+
+### Try to add a session with invalid data
+POST http://localhost:5000/candidate/Eleanor/session
+Content-Type: application/json
+Accept: application/json
+
+{
+  "deep": true,
+  "date": "2024-06-15T00:00:00Z",
+  "minutes": -10
+}

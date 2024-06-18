@@ -1,0 +1,12 @@
+### Get total eligible minutes for a specific candidate and diploma
+GET http://localhost:5000/candidate/Lena/session/A/total
+Accept: application/json
+
+### Get total eligible minutes for a specific candidate with another diploma
+GET http://localhost:5000/candidate/Lena/session/B/total
+Accept: application/json
+
+### Get total eligible minutes for a specific candidate with another diploma
+GET http://localhost:5000/candidate/Lena/session/C/total
+Accept: application/json
+

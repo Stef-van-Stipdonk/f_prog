@@ -1,0 +1,7 @@
+### Get a specific candidate by name
+GET http://localhost:5000/candidate/Eleanor
+Accept: application/json
+
+### Try to get a non-existent candidate
+GET http://localhost:5000/candidate/NonExistent
+Accept: application/json
