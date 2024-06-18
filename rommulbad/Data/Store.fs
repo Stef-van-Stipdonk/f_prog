@@ -1,8 +1,10 @@
 namespace Rommulbad.Data.Store
 
 open System
+open Domain.Candidate
+open Domain.Guardian
+open Domain.Session
 open Rommulbad.Data.Database
-open Rommulbad.Domain
 
 /// Here a store is created that contains the following tables with the following attributes
 ///

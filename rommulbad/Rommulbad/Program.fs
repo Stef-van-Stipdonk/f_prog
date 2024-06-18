@@ -14,12 +14,10 @@ open Rommulbad.Data.SessionService
 open Rommulbad.Data.Store
 open Thoth.Json.Giraffe
 open Thoth.Json.Net
+open Rommulbad.Service.HttpHandlers
 
 let configureApp (app: IApplicationBuilder) =
-    let candidateService = app.ApplicationServices.GetService<ICandidateService>()
-    let guardianService = app.ApplicationServices.GetService<IGuardianService>()
-    let sessionService = app.ApplicationServices.GetService<ISessionService>()
-    app.UseGiraffe(Rommulbad.Service.Web.routes candidateService sessionService guardianService)
+    app.UseGiraffe requestHandlers
 
 let configureServices (services: IServiceCollection) =
     services

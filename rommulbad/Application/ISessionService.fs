@@ -1,12 +1,13 @@
 namespace Rommulbad.Application.SessionService
 
 open System
-open Rommulbad.Domain
+open Domain.Candidate
+open Domain.Session
 
 type ISessionService =
-    abstract member AddSession: string * Session -> Result<unit, string>
-    abstract member GetSessions: string -> seq<Session>
-    abstract member GetTotalMinutes: string -> int
-    abstract member GetEligibleSessions: string * string -> seq<Session>
-    abstract member GetTotalEligibleMinutes: string * string -> int
+    abstract member AddSession: Name * Session -> Result<unit, string>
+    abstract member GetSessions: Name -> seq<Session>
+    abstract member GetTotalMinutes: Name -> int
+    abstract member GetEligibleSessions: Name * Diploma -> seq<Session>
+    abstract member GetTotalEligibleMinutes: Name * Diploma -> int
 

@@ -1,9 +1,9 @@
 module Rommulbad.Data.CandidateService
 open System
+open Domain.Candidate
 open Rommulbad.Application.CandidateService
 open Rommulbad.Data.Database
  open Rommulbad.Data.Store
- open Rommulbad.Domain
 
 type CandidateService(store: Store) =
     interface ICandidateService with

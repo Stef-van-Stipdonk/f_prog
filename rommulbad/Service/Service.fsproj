@@ -7,8 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Serialization.fs" />
-        <Compile Include="Web.fs" />
+        <Compile Include="Serialization\Session.fs" />
+        <Compile Include="Serialization\Candidates.fs" />
+        <Compile Include="Session.fs" />
+        <Compile Include="Candidate.fs" />
+        <Compile Include="HttpHandlers.fs" />
     </ItemGroup>
 
     <ItemGroup>

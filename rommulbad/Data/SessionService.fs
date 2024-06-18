@@ -1,15 +1,15 @@
 module Rommulbad.Data.SessionService
 
 open System
+open Domain.Candidate
+open Domain.Session
 open Rommulbad.Data.Database
 open Rommulbad.Data.Store
-open Rommulbad.Domain
 open Rommulbad.Application.SessionService
-
 
 type SessionService(store: Store) =
     interface ISessionService with            
-        member _.AddSession(name: string, session: Session)=
+        member _.AddSession(name: Name, session: Session)=
             let key = (name, session.Date)
             let session = {
                 Name = name
@@ -17,17 +17,22 @@ type SessionService(store: Store) =
                 Date = session.Date
                 Minutes = session.Minutes
             }
-            match InMemoryDatabase.insert key session store.sessions with
-            | Ok() -> Ok()
-            | Error e -> Error (sprintf "Failed to add session: %s" (e.ToString()))
+            
+            match validateSession session with
+            | Ok session -> 
+                match InMemoryDatabase.insert key session store.sessions with
+                | Ok() -> Ok()
+                | Error e -> Error(sprintf "Failed to add session: %s" (e.ToString()))
+            | Error e -> Error(e)
+            
 
-        member _.GetSessions(name: string) =
+        member _.GetSessions(name: Name) =
             store.sessions
             |> InMemoryDatabase.filter (fun {
                                              Name = n
                                              } -> n = name)
 
-        member _.GetTotalMinutes(name: string) =
+        member _.GetTotalMinutes(name: Name) =
             store.sessions
             |> InMemoryDatabase.filter (fun {
                                              Name = n
@@ -40,7 +45,7 @@ type SessionService(store: Store) =
                              } -> minutes)
             |> Seq.sum
 
-        member _.GetEligibleSessions(name: string, diploma: string) =
+        member _.GetEligibleSessions(name: Name, diploma: Diploma) =
             let shallowOk =
                 match diploma with
                 | "A" -> true
@@ -60,7 +65,7 @@ type SessionService(store: Store) =
             store.sessions
             |> InMemoryDatabase.filter filter
 
-        member _.GetTotalEligibleMinutes(name: string, diploma: string) =
+        member _.GetTotalEligibleMinutes(name: Name, diploma: Diploma) =
             let shallowOk =
                 match diploma with
                 | "A" -> true
