@@ -1,0 +1,59 @@
+### Get a specific candidate by name
+GET http://localhost:5000/candidate/Eleanor
+Accept: application/json
+
+### Award Diploma
+GET http://localhost:5000/candidate/Eleanor/award
+Accept: application/json
+
+### Get total eligible minutes for a specific candidate with another diploma
+GET http://localhost:5000/candidate/Eleanor/session/B/total
+Accept: application/json
+
+### Add a new session for a specific candidate
+POST http://localhost:5000/candidate/Eleanor/session
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Eleanor",
+  "deep": true,
+  "date": "2024-06-15T00:00:00Z",
+  "minutes": 30
+}
+
+### Add a new session for a specific candidate
+POST http://localhost:5000/candidate/Eleanor/session
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Eleanor",
+  "deep": true,
+  "date": "2024-06-16T00:00:00Z",
+  "minutes": 30
+}
+
+### Add a new session for a specific candidate
+POST http://localhost:5000/candidate/Eleanor/session
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Eleanor",
+  "deep": true,
+  "date": "2024-06-17T00:00:00Z",
+  "minutes": 30
+}
+
+### Add a new session for a specific candidate
+POST http://localhost:5000/candidate/Eleanor/session
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Eleanor",
+  "deep": true,
+  "date": "2024-05-20T00:00:00Z",
+  "minutes": 30
+}
