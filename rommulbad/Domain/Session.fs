@@ -2,48 +2,52 @@ module Domain.Session
 
 open System
 
-type Name = private | Name of string
-type Date = private | Date of DateTime
-type Deep = private | Deep of bool
-type Minutes = private | Minutes of int
+type NameOfCandidate = private | NameOfCandidate of string
+type DateOfSession = private | DateOfSession of DateTime
+type SwamInDeepPool = private | SwamInDeepPool of bool
+type MinutesSwam = private | MinutesSwam of int
 
 type Session =
     {
-      Name: string
-      Deep: bool
-      Date: DateTime
-      Minutes: int }
+      NameOfCandidate: NameOfCandidate
+      SwamInDeepPool: SwamInDeepPool
+      DateOfSession: DateOfSession
+      MinutesSwam: MinutesSwam }
     
-module Name =
-    let ofRaw (name: string) : Result<Name, string> =
-        if name.Length > 0 then
-            Ok <| Name name
+module NameOfCandidate =
+    let ofRaw (name: string) : Result<NameOfCandidate, string> =
+        if name = null then
+            Error "Name of candidate cannot be null"
+        else if name.Length > 0 then
+            Ok <| NameOfCandidate name
         else
-            Error "Name cannot be empty"
+            Error "Name of candidate cannot be empty"
 
-    let raw (Name n) = n
+    let raw (NameOfCandidate n) = n
 
-module Date =
-    let ofRaw (date: DateTime) : Result<Date, string> =
+module DateOfSession =
+    let ofRaw (date: DateTime) : Result<DateOfSession, string> =
         if date < DateTime.Now then
-            Ok <| Date date
+            Ok <| DateOfSession date
         else
-            Error "Date cannot be in the future"
+            Error "Date of session cannot be in the future"
 
-    let raw (Date d) = d
+    let raw (DateOfSession d) = d
     
-module Deep =
-    let ofRaw (deep: bool) : Result<Deep, string> =
-        Ok <| Deep deep
+module SwamInDeepPool =
+    let ofRaw (deep: bool) : Result<SwamInDeepPool, string> =
+        Ok <| SwamInDeepPool deep
 
-    let raw (Deep d) = d
+    let raw (SwamInDeepPool d) = d
     
-module Minutes =
-    let ofRaw (minutes: int) : Result<Minutes, string> =
+module MinutesSwam =
+    let ofRaw (minutes: int) : Result<MinutesSwam, string> =
         if minutes <= 0 then
-            Error "Minutes must be greater than 0"
+            Error "Minutes swam must be greater than 0"
         else if minutes > 30 then
-            Error "Minutes must be less than 60"
+            Error "Minutes swam cannot be more than 30"
         else
-            Ok <| Minutes minutes
+            Ok <| MinutesSwam minutes
+            
+    let raw (MinutesSwam m) = m
    

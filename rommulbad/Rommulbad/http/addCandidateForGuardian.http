@@ -1,0 +1,44 @@
+### Add candidate for guardian
+POST http://localhost:5000/guardian/123-ABCD/candidate
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Henk",
+  "date_of_birth": "2010-06-15T00:00:00Z",
+  "diploma": "A",
+  "guardian_id": "123-ABCD"
+}
+
+### Add candidate with the same name
+POST http://localhost:5000/guardian/123-ABCD/candidate
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Henk",
+  "date_of_birth": "2010-06-17T00:00:00Z",
+  "diploma": "A",
+  "guardian_id": "123-ABCD"
+}
+
+### Try to add a candidate with invalid data
+POST http://localhost:5000/guardian/123-ABCD/candidate
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Henk"
+}
+
+### Try add candidate for guardian that does not exist
+POST http://localhost:5000/guardian/123-FFFA/candidate
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Henk",
+  "date_of_birth": "2010-06-15T00:00:00Z",
+  "diploma": "A",
+  "guardian_id": "123-FFFA"
+}

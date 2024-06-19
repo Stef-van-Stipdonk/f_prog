@@ -11,7 +11,7 @@ type CandidateService(store: Store) =
             store.candidates
             |> InMemoryDatabase.filter (fun _ -> true)
 
-        member _.GetCandidate(name: string) =
+        member _.GetCandidate(name: Name) =
             store.candidates
             |> InMemoryDatabase.lookup name
             
@@ -25,3 +25,6 @@ type CandidateService(store: Store) =
             } store.candidates with
             | Ok() -> Some("Candidate added")
             | Error e -> Some(sprintf "Failed to add candidate: %s" (e.ToString()))
+            
+                
+                

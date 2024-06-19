@@ -14,7 +14,7 @@ let addSession (nameStr: string) : HttpHandler =
         task {
             let service = ctx.GetService<ISessionService>()
             let! body = ThothSerializer.ReadBody ctx decode
-            match Name.ofRaw nameStr, body with
+            match NameOfCandidate.ofRaw nameStr, body with
             | Ok name, Ok session ->
                 match service.AddSession(name, session) with
                 | Ok () -> return! text "OK" next ctx
@@ -27,7 +27,7 @@ let getSessions (nameStr: string) : HttpHandler =
     fun next ctx ->
         task {
             let service = ctx.GetService<ISessionService>()
-            match Name.ofRaw nameStr with
+            match NameOfCandidate.ofRaw nameStr with
             | Ok name ->
                 let sessions = service.GetSessions(name)
                 let json = serializeSessions sessions
@@ -39,7 +39,7 @@ let getTotalMinutes (nameStr: string) : HttpHandler =
     fun next ctx ->
         task {
             let service = ctx.GetService<ISessionService>()
-            match Name.ofRaw nameStr with
+            match NameOfCandidate.ofRaw nameStr with
             | Ok name ->
                 let total = service.GetTotalMinutes(name)
                 let json = Encode.int total |> Encode.toString 0
@@ -51,7 +51,7 @@ let getEligibleSessions (nameStr: string, diploma: string) : HttpHandler =
     fun next ctx ->
         task {
             let service = ctx.GetService<ISessionService>()
-            match Name.ofRaw nameStr with
+            match NameOfCandidate.ofRaw nameStr with
             | Ok name ->
                 match Diploma.ofRaw diploma with
                 | Ok diploma ->
@@ -66,7 +66,7 @@ let getTotalEligibleMinutes (nameStr: string, diploma: string) : HttpHandler =
     fun next ctx ->
         task {
             let service = ctx.GetService<ISessionService>()
-            match Name.ofRaw nameStr with
+            match NameOfCandidate.ofRaw nameStr with
             | Ok name ->
                 match Diploma.ofRaw diploma with
                 | Ok diploma ->
@@ -76,6 +76,18 @@ let getTotalEligibleMinutes (nameStr: string, diploma: string) : HttpHandler =
                 | Error errorMessage -> return! RequestErrors.BAD_REQUEST errorMessage next ctx
             | Error errorMessage -> return! RequestErrors.BAD_REQUEST errorMessage next ctx
         }
+        
+let awardDiploma (name: string) : HttpHandler =
+    fun next ctx ->
+        task {
+            let service = ctx.GetService<ISessionService>()
+            match NameOfCandidate.ofRaw name with
+            | Ok name ->
+                match service.AwardDiploma(name) with
+                | Ok resultValue -> return! text resultValue next ctx
+                | Error errorValue -> return! RequestErrors.BAD_REQUEST errorValue next ctx
+            | Error errorMessage -> return! RequestErrors.BAD_REQUEST errorMessage next ctx
+        }
 
 let routes: HttpHandler =
     choose
@@ -83,5 +95,6 @@ let routes: HttpHandler =
           GET >=> routef "/candidate/%s/session" getSessions
           GET >=> routef "/candidate/%s/session/total" getTotalMinutes
           GET >=> routef "/candidate/%s/session/%s" getEligibleSessions
+          GET >=> routef "/candidate/%s/award" awardDiploma
           GET >=> routef "/candidate/%s/session/%s/total" getTotalEligibleMinutes
         ]

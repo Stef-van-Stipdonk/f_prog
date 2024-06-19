@@ -14,6 +14,9 @@
     <Content Include="http\getTotalMinutes.http" />
     <Content Include="http\getEligibleSessions.http" />
     <Content Include="http\getTotalEligibleMinutes.http" />
+    <Content Include="http\addGuardian.http" />
+    <Content Include="http\addCandidateForGuardian.http" />
+    <Content Include="http\awardDiploma.http" />
   </ItemGroup>
 
   <ItemGroup>

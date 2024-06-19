@@ -7,10 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Serialization\Session.fs" />
         <Compile Include="Serialization\Candidates.fs" />
+        <Compile Include="Serialization\Session.fs" />
+        <Compile Include="Serialization\Guardian.fs" />
         <Compile Include="Session.fs" />
         <Compile Include="Candidate.fs" />
+        <Compile Include="Guardian.fs" />
         <Compile Include="HttpHandlers.fs" />
     </ItemGroup>
 

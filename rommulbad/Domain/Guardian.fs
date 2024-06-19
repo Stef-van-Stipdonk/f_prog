@@ -1,27 +1,30 @@
 module Domain.Guardian
 
-open Domain.Candidate
+open System.Text.RegularExpressions
 
 type Id = private | Id of string
 type Name = private | Name of string
 
 type Guardian =
-    { Id: string
-      Name: string
-      Candidates: List<Candidate> }
+    {
+      Id: Id
+      Name: Name
+    }
     
 module Id =
     let ofRaw (id: string) : Result<Id, string> =
-        if id.Length > 0 then
-            Ok <| Id id
+        if not (Regex.IsMatch(id, @"^[0-9]{3}-[a-zA-Z]{4}")) then
+            Error "Value does not have the correct format"
         else
-            Error "Id cannot be empty"
+            Ok <| Id id
             
     let raw (Id i) = i
     
 module Name =
     let ofRaw (name: string) : Result<Name, string> =
-        if name.Length > 0 then
+        if Regex.IsMatch(name, @"^[a-zA-Z]+(?: *[a-zA-Z]+)*$") then
             Ok <| Name name
         else
-            Error "Name cannot be empty"
+            Error "Name cannot contain numbers or special characters, and can have 0 or more spaces"
+            
+    let raw (Name n) = n

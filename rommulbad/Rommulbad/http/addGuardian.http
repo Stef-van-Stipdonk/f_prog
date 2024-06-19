@@ -1,0 +1,38 @@
+### Add a guardian
+POST  http://localhost:5000/guardian
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "123-FFFF",
+  "name": "George"
+}
+
+### Add a guardian with missing data
+POST  http://localhost:5000/guardian
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "George"
+}
+
+### Add a guardian with invalid data
+POST  http://localhost:5000/guardian
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "123",
+  "name": "George"
+}
+
+### Add a guardian with duplicate id
+POST  http://localhost:5000/guardian
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": "123-ABCD",
+  "name": "George"
+}

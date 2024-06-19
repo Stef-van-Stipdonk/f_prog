@@ -1,6 +1,7 @@
 module Domain.Candidate
 
 open System
+open System.Text.RegularExpressions
 
 type Name = private | Name of string
 type DateOfBirth = private | DateOfBirth of DateTime
@@ -8,17 +9,17 @@ type GuardianId = private | GuardianId of string
 type Diploma = private | Diploma of string
 
 type Candidate =
-    { Name: string
-      DateOfBirth: DateTime
-      GuardianId: string
-      Diploma: string }
+    { Name: Name
+      DateOfBirth: DateOfBirth
+      GuardianId: GuardianId
+      Diploma: Diploma }
 
 module Name =
     let ofRaw (name: string) : Result<Name, string> =
-        if name.Length > 0 then
+        if Regex.IsMatch(name, @"^[a-zA-Z]+(?: *[a-zA-Z]+)*$") then
             Ok <| Name name
         else
-            Error "Name cannot be empty"
+            Error "Name cannot contain numbers or special characters, and can have 0 or more spaces"
             
     let raw (Name n) = n
     
@@ -47,7 +48,6 @@ module Diploma =
         | "B" -> Ok <| Diploma diploma
         | "C" -> Ok <| Diploma diploma
         | "" -> Ok <| Diploma diploma
-        | " " -> Ok <| Diploma diploma
-        | _ -> Error "Diploma must be A, B or C"
+        | _ -> Error "Diploma must be A, B, C, or empty"
 
     let raw (Diploma d) = d

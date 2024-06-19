@@ -5,9 +5,10 @@ open Domain.Candidate
 open Domain.Session
 
 type ISessionService =
-    abstract member AddSession: Name * Session -> Result<unit, string>
-    abstract member GetSessions: Name -> seq<Session>
-    abstract member GetTotalMinutes: Name -> int
-    abstract member GetEligibleSessions: Name * Diploma -> seq<Session>
-    abstract member GetTotalEligibleMinutes: Name * Diploma -> int
+    abstract member AddSession: NameOfCandidate * Session -> Result<unit, string>
+    abstract member GetSessions: NameOfCandidate -> seq<Session>
+    abstract member GetTotalMinutes: NameOfCandidate -> int
+    abstract member GetEligibleSessions: NameOfCandidate * Diploma -> seq<Session>
+    abstract member GetTotalEligibleMinutes: NameOfCandidate * Diploma -> int
+    abstract member AwardDiploma: NameOfCandidate -> Result<string, string>
 
